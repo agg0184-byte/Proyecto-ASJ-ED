@@ -14,6 +14,9 @@ public class Main {
         System.out.println("This is old logic");
     }
 
+    // SMELL 1: Long Method (Every thing is inside the Main)
+    // SMELL 2: Large Class / God Class (The class is too long)
+
     public static void main(String[] args) throws Exception {
 
         WebDriverManager.chromedriver().setup();
@@ -28,6 +31,7 @@ public class Main {
             WebElement u = d.findElement(By.id("user-name")); // SMELL 9: Poor naming 'u'
             u.sendKeys("standard_user");
 
+            // SMELL 4: Magic Strings ("standard_user")
             WebElement p = d.findElement(By.id("password")); // SMELL 9: Poor naming 'p'
             p.sendKeys("secret_sauce");
 
@@ -39,6 +43,8 @@ public class Main {
             Thread.sleep(3000);
 
             System.out.println("Login exitoso!");
+
+            // SMELL 3: Duplicate Code (The logic besides validation and impression is duplicated)
 
             List<WebElement> items = d.findElements(By.cssSelector(".inventory_item_name"));
             if (items.size() > 0) {
@@ -63,6 +69,7 @@ public class Main {
         }
     }
 
+    // SMELL 10: Primitive Obsession (Passing multiple strings instead of one encapsulated object)
     public static void fillForm(WebDriver driver, String a, String b, String c, String address, String state, String country) throws Exception {
         System.out.println("Filling data: " + a + " " + b + " - ZIP: " + c);
         System.out.println("Address: " + address + " " + state + " " + country);
