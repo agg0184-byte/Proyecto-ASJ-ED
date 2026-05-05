@@ -31,6 +31,7 @@ public class Main {
             WebElement u = d.findElement(By.id("user-name")); // SMELL 9: Poor naming 'u'
             u.sendKeys("standard_user");
 
+            // SMELL 4: Magic Strings ("standard_user")
             WebElement p = d.findElement(By.id("password")); // SMELL 9: Poor naming 'p'
             p.sendKeys("secret_sauce");
 
