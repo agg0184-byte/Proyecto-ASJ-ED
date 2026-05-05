@@ -43,6 +43,8 @@ public class Main {
 
             System.out.println("Login exitoso!");
 
+            // SMELL 3: Duplicate Code (The logic besides validation and impression is duplicated)
+
             List<WebElement> items = d.findElements(By.cssSelector(".inventory_item_name"));
             if (items.size() > 0) {
                 System.out.println("Producto encontrado: " + items.get(0).getText());
