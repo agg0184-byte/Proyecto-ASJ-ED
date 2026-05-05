@@ -66,6 +66,7 @@ public class Main {
         }
     }
 
+    // SMELL 10: Primitive Obsession (Passing multiple strings instead of one encapsulated object)
     public static void fillForm(WebDriver driver, String a, String b, String c, String address, String state, String country) throws Exception {
         System.out.println("Filling data: " + a + " " + b + " - ZIP: " + c);
         System.out.println("Address: " + address + " " + state + " " + country);
