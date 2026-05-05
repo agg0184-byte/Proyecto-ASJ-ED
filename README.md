@@ -1,32 +1,13 @@
 # Proyecto-ASJ-ED
 At the start in the Main.java code we can see at least 10 "Code Smells", each "Code Smells" have a type, this is the way that we are going to order it.
 
-Bloaters:
-There is 2 bloaters in this code.
--Long Method: Being here the *BadSeleniumTest.testE2EShoppingFlow()*, is basically a single method with all the flow(Login, checkout,etc..)
-
--Large Class: Being here the *BadSeleniumTest* has a lot of content and too many responsabilities (WebDriver, UI Actions,etc...)
-
-Object-Orientation Abusers:
-There is 2 Object-Orientation Abusers in this code.
--Switch Statements: The *setup()* uses a switch instead of polymorphism.
-
--Temporary Fields: *tempUsername*, *tempPassword*, and *tempLoginTime* in *BadSeleniumTest* are used only for the first lines then they aren´t used in the rest of the code.
-
-Change Preventers:
-
--Divergent Change: *BadSeleniumTest* has to change a lot by many factors, for example for configure de WebDrivers or change how the data is managed.
-
--Shothun Surgery: For change the login format or framework, we have to shotgun surgery across too many line because of the *System.out.println("[LOG...")* that is scattered in the code.
-
-Dispensables:
-
--Duplicate Code: For Example, we have the same *while* loop in the methods *waitForId*, *waitForXpath* and *waitForClass*
-
--Dead Code: The *oldLoginMethod()* and the *nusedField* variable in *BadSeleniumTest* are entirely unused.
-
-Couplers:In Reporter.java`, the `generateReport()` method "envies" `BadSeleniumTest`, making 5 consecutive calls to its getters/fields to format a string.
-
--Feature Envy: 
-
--Inappropiate Intimacy: *Reporter.java* directly accesses the package-private fields (*testName*, *browserType*, *driver*) of *BadSeleniumTest* instead of respecting encapsulation.
+1. **Long Method** *(Bloater)*: *Main.main()* contains the entire flow (setup, navigation, login, validation, and teardown) in a single massive method.
+2. **Large Class / God Class** *(Bloater)*: The *Main* class has too many responsibilities—it configures the WebDriver, performs UI tests, and handles reporting.
+3. **Duplicate Code** *(Dispensable)*: The logic for checking and printing the product items is duplicated with only minor differences in index.
+4. **Magic Numbers & Strings** *(Obfuscator)*: Hardcoded values scattered throughout the code, such as the URL (`"https://www.saucedemo.com/"`) and credentials (`"standard_user"`).
+5. **Long Parameter List** *(Bloater)*: The *fillForm* method takes 7 individual arguments instead of using an encapsulated parameter object.
+6. **Hardcoded Sleeps** *(Test Automation Smell)*: Extensive use of explicit pauses (`Thread.sleep(2000)`) instead of using Selenium's robust implicit or explicit waits.
+7. **Dead Code** *(Dispensable)*: The method *oldMethodThatIsNotUsedAnymore()* is completely unused in the codebase.
+8. **Obvious Comments** *(Dispensable)*: The code contains redundant comments explaining exactly what the code does (e.g., `// Configure the web driver using webdrivermanager`).
+9. **Inconsistent/Poor Naming** *(Obfuscator)*: Variables have meaningless names such as `d` (WebDriver), `u` (username WebElement), `p` (password WebElement), and `btn1`.
+10. **Primitive Obsession** *(Object-Orientation Abuser)*: `fillForm` passes multiple individual primitive strings (`a`, `b`, `address`, etc.) instead of an encapsulated data object.
