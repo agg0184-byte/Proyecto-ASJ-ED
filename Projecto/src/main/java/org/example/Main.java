@@ -15,6 +15,8 @@ public class Main {
     }
 
     // SMELL 1: Long Method (Every thing is inside the Main)
+    // SMELL 2: Large Class / God Class (The class is too long)
+
     public static void main(String[] args) throws Exception {
 
         WebDriverManager.chromedriver().setup();
