@@ -14,6 +14,7 @@ public class Main {
         System.out.println("This is old logic");
     }
 
+    // SMELL 1: Long Method (Every thing is inside the Main)
     public static void main(String[] args) throws Exception {
 
         WebDriverManager.chromedriver().setup();

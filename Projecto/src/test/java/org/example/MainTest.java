@@ -11,5 +11,6 @@ public class MainTest {
         assertDoesNotThrow(() -> {
             Main.main(new String[]{});
         }, "The execution of the main method failed unexpectedly");
+
     }
 }
