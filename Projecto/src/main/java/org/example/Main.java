@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Main {
 
-
+    // SMELL 7: Dead Code (This code isn't used)
     public void oldMethodThatIsNotUsedAnymore() {
         System.out.println("This is old logic");
     }
@@ -18,14 +18,15 @@ public class Main {
     // SMELL 2: Large Class / God Class (The class is too long)
 
     public static void main(String[] args) throws Exception {
-
+        // SMELL 8: Comments (Obvious comments)
+        // Configure the web driver using webdrivermanager
         WebDriverManager.chromedriver().setup();
 
         WebDriver d = new ChromeDriver(); // SMELL 9: Inconsistent/Poor Naming (Variable 'd')
 
         try {
             d.get("https://www.saucedemo.com/");
-
+            // SMELL 6: Hardcoded Sleeps (Explicit pauses with Thread.sleep)
             Thread.sleep(2000);
 
             WebElement u = d.findElement(By.id("user-name")); // SMELL 9: Poor naming 'u'
@@ -34,7 +35,7 @@ public class Main {
             // SMELL 4: Magic Strings ("standard_user")
             WebElement p = d.findElement(By.id("password")); // SMELL 9: Poor naming 'p'
             p.sendKeys("secret_sauce");
-
+            // SMELL 6: Hardcoded Sleeps (Explicit pauses with Thread.sleep)
             Thread.sleep(1000);
 
             WebElement btn1 = d.findElement(By.id("login-button")); // SMELL 9: Poor naming 'btn1'
@@ -64,6 +65,7 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            // SMELL 6: Hardcoded Sleeps (Explicit pauses with Thread.sleep)
             Thread.sleep(2000);
             d.quit();
         }
