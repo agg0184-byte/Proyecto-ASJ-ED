@@ -43,24 +43,24 @@ public class Main {
 
             Thread.sleep(3000);
 
-            System.out.println("Login exitoso!");
+            System.out.println("Successful login");
 
             // SMELL 3: Duplicate Code (The logic besides validation and impression is duplicated)
 
             List<WebElement> items = d.findElements(By.cssSelector(".inventory_item_name"));
             if (items.size() > 0) {
-                System.out.println("Producto encontrado: " + items.get(0).getText());
+                System.out.println("Product Finded: " + items.get(0).getText());
             } else {
-                System.out.println("No hay productos");
+                System.out.println("There is no products");
             }
 
             if (items.size() > 1) {
-                System.out.println("Producto encontrado: " + items.get(1).getText());
+                System.out.println("Product Finded: " + items.get(1).getText());
             } else {
-                System.out.println("No hay productos");
+                System.out.println("There is no products");
             }
 
-            fillForm(d, "John", "Doe", "12345", "123 Main St", "NY", "USA");
+            fillForm(d, "Antonio", "Gomez", "12345", "123 St", "SEV", "ES");
 
         } catch (Exception e) {
             e.printStackTrace();
