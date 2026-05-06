@@ -4,78 +4,79 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import io.github.bonigarcia.wdm.WebDriverManager;
+
+import java.time.Duration;
 import java.util.List;
 
 public class Main {
 
-    // SMELL 7: Dead Code (This code isn't used)
-    public void oldMethodThatIsNotUsedAnymore() {
-        System.out.println("This is old logic");
-    }
+    private static final String BASE_URL = "https://www.saucedemo.com/";
+    private static final String VALID_USER = "standard_user";
+    private static final String VALID_PASSWORD = "secret_sauce";
+    private static final int TIMEOUT_SECONDS = 10;
 
-    // SMELL 1: Long Method (Every thing is inside the Main)
-    // SMELL 2: Large Class / God Class (The class is too long)
-
-    public static void main(String[] args) throws Exception {
-        // SMELL 8: Comments (Obvious comments)
-        // Configure the web driver using webdrivermanager
+    public static void main(String[] args) {
         WebDriverManager.chromedriver().setup();
-
-        WebDriver d = new ChromeDriver(); // SMELL 9: Inconsistent/Poor Naming (Variable 'd')
+        WebDriver driver = new ChromeDriver();
 
         try {
-            d.get("https://www.saucedemo.com/");
-            // SMELL 6: Hardcoded Sleeps (Explicit pauses with Thread.sleep)
-            Thread.sleep(2000);
+            driver.get(BASE_URL);
 
-            WebElement u = d.findElement(By.id("user-name")); // SMELL 9: Poor naming 'u'
-            u.sendKeys("standard_user");
+            login(driver, VALID_USER, VALID_PASSWORD);
+            System.out.println("Successful login!");
 
-            // SMELL 4: Magic Strings ("standard_user")
-            WebElement p = d.findElement(By.id("password")); // SMELL 9: Poor naming 'p'
-            p.sendKeys("secret_sauce");
-            // SMELL 6: Hardcoded Sleeps (Explicit pauses with Thread.sleep)
-            Thread.sleep(1000);
+            checkInventoryItems(driver);
 
-            WebElement btn1 = d.findElement(By.id("login-button")); // SMELL 9: Poor naming 'btn1'
-            btn1.click();
-
-            Thread.sleep(3000);
-
-            System.out.println("Successful login");
-
-            // SMELL 3: Duplicate Code (The logic besides validation and impression is duplicated)
-
-            List<WebElement> items = d.findElements(By.cssSelector(".inventory_item_name"));
-            if (items.size() > 0) {
-                System.out.println("Product Finded: " + items.get(0).getText());
-            } else {
-                System.out.println("There is no products");
-            }
-
-            if (items.size() > 1) {
-                System.out.println("Product Finded: " + items.get(1).getText());
-            } else {
-                System.out.println("There is no products");
-            }
-
-            fillForm(d, "Antonio", "Gomez", "12345", "123 St", "SEV", "ES");
+            CustomerInfo customer = new CustomerInfo("Antonio", "Gomez", "1234", "123 St", "SEV", "ES");
+            fillCheckoutForm(customer);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("\n" + "An error occurred during test execution: " + e.getMessage());
         } finally {
-            // SMELL 6: Hardcoded Sleeps (Explicit pauses with Thread.sleep)
-            Thread.sleep(2000);
-            d.quit();
+            if (driver != null) {
+                driver.quit();
+            }
         }
     }
 
-    // SMELL 10: Primitive Obsession (Passing multiple strings instead of one encapsulated object)
-    public static void fillForm(WebDriver driver, String a, String b, String c, String address, String state, String country) throws Exception {
-        System.out.println("Filling data: " + a + " " + b + " - ZIP: " + c);
-        System.out.println("Address: " + address + " " + state + " " + country);
+    private static void login(WebDriver driver, String username, String password) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT_SECONDS));
 
-        Thread.sleep(1000);
+        WebElement usernameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("user-name")));
+        usernameInput.sendKeys(username);
+
+        WebElement passwordInput = driver.findElement(By.id("password"));
+        passwordInput.sendKeys(password);
+
+        WebElement loginButton = driver.findElement(By.id("login-button"));
+        loginButton.click();
     }
+
+    private static void checkInventoryItems(WebDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT_SECONDS));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".inventory_item_name")));
+
+        List<WebElement> items = driver.findElements(By.cssSelector(".inventory_item_name"));
+        printProductIfPresent(items, 0);
+        printProductIfPresent(items, 1);
+    }
+
+    private static void printProductIfPresent(List<WebElement> items, int index) {
+        if (items.size() > index) {
+            System.out.println("Product Finded: " + items.get(index).getText());
+        } else {
+            System.out.println("Not enought products");
+        }
+    }
+
+    private static void fillCheckoutForm(CustomerInfo customer) {
+        System.out.printf("Filling Data: %s %s - ZIP: %s%n", customer.firstName(), customer.lastName(), customer.zipCode());
+        System.out.printf("Address: %s %s %s%n", customer.address(), customer.state(), customer.country());
+    }
+
+
+    public record CustomerInfo(String firstName, String lastName, String zipCode, String address, String state, String country) {}
 }
