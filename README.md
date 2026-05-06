@@ -11,3 +11,13 @@ At the start in the Main.java code we can see at least 10 "Code Smells", each "C
 8. **Obvious Comments** *(Dispensable)*: The code contains redundant comments explaining exactly what the code does (e.g., `// Configure the web driver using webdrivermanager`).
 9. **Inconsistent/Poor Naming** *(Obfuscator)*: Variables have meaningless names such as `d` (WebDriver), `u` (username WebElement), `p` (password WebElement), and `btn1`.
 10. **Primitive Obsession** *(Object-Orientation Abuser)*: `fillForm` passes multiple individual primitive strings (`a`, `b`, `address`, etc.) instead of an encapsulated data object.
+
+
+**Solution**
+
+- **Extract Method & Class**: We will break down `main()` into smaller steps and move WebDriver initialization to a separate class to solve **Long Method** and **Large Class**.
+- **Introduce Parameter Object**: We will create a class to handle the form data, solving the **Long Parameter List** and **Primitive Obsession**.
+- **Extract Variables/Constants**: We will move hardcoded URLs and locators to constants or properties to solve **Magic Numbers & Strings**.
+- **Rename Variables**: We will use IDE renaming tools to give variables descriptive names, fixing **Inconsistent/Poor Naming**.
+- **Remove Dispensables**: We will delete **Dead Code** and **Obvious Comments**, and extract **Duplicate Code** into reusable methods.
+- **Implement Explicit Waits**: We will replace **Hardcoded Sleeps** with Selenium `WebDriverWait` mechanisms.
